@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36221.1 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.G02.Web", "Store.G02.Web\Store.G02.Web.csproj", "{E1A7118B-EBA5-4E5D-9DEF-21537F84F635}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.Go2.Domain", "Core\Store.Go2.Domain\Store.Go2.Domain.csproj", "{4D0E6707-7DB5-4762-9DB1-338A9A609565}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E1A7118B-EBA5-4E5D-9DEF-21537F84F635}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1A7118B-EBA5-4E5D-9DEF-21537F84F635}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1A7118B-EBA5-4E5D-9DEF-21537F84F635}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1A7118B-EBA5-4E5D-9DEF-21537F84F635}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D0E6707-7DB5-4762-9DB1-338A9A609565}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D0E6707-7DB5-4762-9DB1-338A9A609565}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D0E6707-7DB5-4762-9DB1-338A9A609565}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D0E6707-7DB5-4762-9DB1-338A9A609565}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4D0E6707-7DB5-4762-9DB1-338A9A609565} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A0BA572A-0231-4B9F-AE92-08E3AD71DDC8}
+	EndGlobalSection
+EndGlobal
