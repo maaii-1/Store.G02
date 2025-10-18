@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Store.G02.Services.Abstraction\Store.G02.Services.Abstraction.csproj" />
+    <ProjectReference Include="..\Store.Go2.Domain\Store.G02.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
