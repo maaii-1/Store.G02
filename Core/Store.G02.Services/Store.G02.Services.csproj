@@ -7,9 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\" />
-    <Folder Include="Contracts\" />
-    <Folder Include="Exceptions\" />
+    <ProjectReference Include="..\Store.G02.Services.Abstraction\Store.G02.Services.Abstraction.csproj" />
+    <ProjectReference Include="..\Store.Go2.Domain\Store.G02.Domain.csproj" />
   </ItemGroup>
 
 </Project>
