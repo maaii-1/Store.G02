@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Store.G02.Services
 {
-    internal class ServiceManager(IUnitOfWork _unitOfWork, IMapper _mapper) : IServiceManager
+    public class ServiceManager(IUnitOfWork _unitOfWork, IMapper _mapper) : IServiceManager
     {
         public IProductService productService { get; } = new ProductService(_unitOfWork, _mapper);
     }
