@@ -32,7 +32,7 @@ namespace Store.G02.Web
             builder.Services.AddScoped<IDbInitializer, DbInitializer>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IServiceManager, ServiceManager>();
-            builder.Services.AddAutoMapper(M => M.AddProfile(new ProductProfile()));
+            builder.Services.AddAutoMapper(M => M.AddProfile(new ProductProfile(builder.Configuration)));
 
 
             var app = builder.Build();
@@ -43,6 +43,9 @@ namespace Store.G02.Web
             var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();  // Ask CLR To Create Object From IDbInitializer 
             await dbInitializer.InitializeAsync(); 
             #endregion
+
+
+            app.UseStaticFiles();
 
 
             // Configure the HTTP request pipeline.
