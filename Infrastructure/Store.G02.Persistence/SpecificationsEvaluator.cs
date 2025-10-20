@@ -22,7 +22,7 @@ namespace Store.G02.Persistence
             }
 
             // _context.Products.where(P => P.Id == 12).Include(P => P.Brand)
-            spec.Includes.Aggregate(query, (query, IncludeExpression) =>  query.Include(IncludeExpression));
+            query = spec.Includes.Aggregate(query, (query, IncludeExpression) =>  query.Include(IncludeExpression));
 
             return query; 
         }
