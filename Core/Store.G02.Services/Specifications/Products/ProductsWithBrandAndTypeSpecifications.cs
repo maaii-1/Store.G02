@@ -14,7 +14,7 @@ namespace Store.G02.Services.Specifications.Products
         {
             ApplyIncludes();
         }
-        public ProductsWithBrandAndTypeSpecifications(int? brandId, int? typeId, string? sort, string? search) : base
+        public ProductsWithBrandAndTypeSpecifications(int? brandId, int? typeId, string? sort, string? search, int? pageIndex, int? pageSize) : base
             (
                 P =>
                 (!brandId.HasValue || P.BrandId == brandId) 
@@ -26,18 +26,49 @@ namespace Store.G02.Services.Specifications.Products
 
             )
         {
+            //if (!string.IsNullOrEmpty(sort))
+            //{
+            //    switch(sort.ToLower())
+            //    {
+            //        case "priceasc":
+            //            AddOrderBy(P => P.Price); 
+            //            break;
+            //        case "pricedesc":
+            //            AddOrderByDescending(P => P.Price); 
+            //            break;
+            //        default:
+            //            AddOrderBy(P => P.Name); 
+            //            break;
+            //    }
+            //}
+            //else
+            //{
+            //    //OrderBy = P => P.Name; 
+            //    AddOrderBy(P => P.Name);
+            //}
+
+            // Skip = (pageIndex - 1) * pageSize
+            // Take = 5
+            ApplyPagination(pageSize.Value, pageIndex.Value);
+            ApplySorting(sort);
+            ApplyIncludes();
+        }
+
+
+        private void ApplySorting(string? sort)
+        {
             if (!string.IsNullOrEmpty(sort))
             {
-                switch(sort.ToLower())
+                switch (sort.ToLower())
                 {
                     case "priceasc":
-                        AddOrderBy(P => P.Price); 
+                        AddOrderBy(P => P.Price);
                         break;
                     case "pricedesc":
-                        AddOrderByDescending(P => P.Price); 
+                        AddOrderByDescending(P => P.Price);
                         break;
                     default:
-                        AddOrderBy(P => P.Name); 
+                        AddOrderBy(P => P.Name);
                         break;
                 }
             }
@@ -46,11 +77,7 @@ namespace Store.G02.Services.Specifications.Products
                 //OrderBy = P => P.Name; 
                 AddOrderBy(P => P.Name);
             }
-
-
-            ApplyIncludes();
         }
-
 
         private void ApplyIncludes()
         {
