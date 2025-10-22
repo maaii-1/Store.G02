@@ -1,4 +1,5 @@
 ﻿using Store.G02.Domain.Entities.Products;
+using Store.G02.Shared.Dtos.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +15,14 @@ namespace Store.G02.Services.Specifications.Products
         {
             ApplyIncludes();
         }
-        public ProductsWithBrandAndTypeSpecifications(int? brandId, int? typeId, string? sort, string? search, int? pageIndex, int? pageSize) : base
+        public ProductsWithBrandAndTypeSpecifications(ProductQueryParameters parameters) : base
             (
                 P =>
-                (!brandId.HasValue || P.BrandId == brandId) 
+                (!parameters.BrandId.HasValue || P.BrandId == parameters.BrandId) 
                 &&
-                (!typeId.HasValue  || P.TypeId == typeId)
+                (!parameters.TypeId.HasValue  || P.TypeId == parameters.TypeId)
                 &&
-                (string.IsNullOrEmpty(search) || P.Name.ToLower().Contains(search.ToLower()))
+                (string.IsNullOrEmpty(parameters.Search) || P.Name.ToLower().Contains(parameters.Search.ToLower()))
 
 
             )
@@ -49,8 +50,8 @@ namespace Store.G02.Services.Specifications.Products
 
             // Skip = (pageIndex - 1) * pageSize
             // Take = 5
-            ApplyPagination(pageSize.Value, pageIndex.Value);
-            ApplySorting(sort);
+            ApplyPagination(parameters.PageSize, parameters.PageIndex);
+            ApplySorting(parameters.Sort);
             ApplyIncludes();
         }
 
