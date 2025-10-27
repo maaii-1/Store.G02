@@ -19,6 +19,19 @@ namespace Store.G02.Web.Middlewares
             try
             {
                 await _next.Invoke(context);
+                if(context.Response.StatusCode == StatusCodes.Status404NotFound)
+                {
+                    context.Response.ContentType = "application/json";
+                    var response = new ErrorDetails()
+                    {
+                        StatusCode = StatusCodes.Status404NotFound,
+                        ErrorMessage = $"The End Point {context.Request.Path} Is Not Found"
+                    };
+
+                    await context.Response.WriteAsJsonAsync(response);
+
+                } 
+
             }catch (Exception ex)
             {
                 // log Exception
