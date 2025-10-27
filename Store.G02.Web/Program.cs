@@ -8,6 +8,7 @@ using Store.G02.Services;
 using Store.G02.Services.Abstraction;
 using Store.G02.Services.Mapping.Products;
 using Store.G02.Shared.ErrorsModels;
+using Store.G02.Web.Extensions;
 using Store.G02.Web.Middlewares;
 using System.Threading.Tasks;
 
@@ -20,74 +21,87 @@ namespace Store.G02.Web
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            #region Services
 
-            builder.Services.AddControllers();
+            //builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            //builder.Services.AddEndpointsApiExplorer();
+            //builder.Services.AddSwaggerGen();
 
 
-            builder.Services.AddDbContext<StoreDbContext>(options =>
-            {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-            });
+            #region Infrastructure Services
+            //builder.Services.AddDbContext<StoreDbContext>(options =>
+            //{
+            //    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            //});
 
 
-            builder.Services.AddScoped<IDbInitializer, DbInitializer>();
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddScoped<IServiceManager, ServiceManager>();
-            builder.Services.AddAutoMapper(M => M.AddProfile(new ProductProfile(builder.Configuration)));
+            //builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+            //builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            #endregion
+            //builder.Services.AddInfrastructureServices(builder.Configuration);
+
+            #region Application Services
+            //builder.Services.AddScoped<IServiceManager, ServiceManager>();
+            //builder.Services.AddAutoMapper(M => M.AddProfile(new ProductProfile(builder.Configuration))); 
+            #endregion
+            //builder.Services.AddApplicationServices(builder.Configuration);
 
 
-            builder.Services.Configure<ApiBehaviorOptions>(config =>
-            {
-                config.InvalidModelStateResponseFactory = (actioncontext) =>
-                {
-                    var errors = actioncontext.ModelState.Where(m => m.Value.Errors.Any())
-                                 .Select(m => new ValidationError()
-                                 {
-                                     Field = m.Key,
-                                     Errors = m.Value.Errors.Select(errors => errors.ErrorMessage)
+            //builder.Services.Configure<ApiBehaviorOptions>(config =>
+            //{
+            //    config.InvalidModelStateResponseFactory = (actioncontext) =>
+            //    {
+            //        var errors = actioncontext.ModelState.Where(m => m.Value.Errors.Any())
+            //                     .Select(m => new ValidationError()
+            //                     {
+            //                         Field = m.Key,
+            //                         Errors = m.Value.Errors.Select(errors => errors.ErrorMessage)
 
-                                 });
+            //                     });
 
-                    var response = new ValidationErrorResponse()
-                    {
-                        Errors = errors
-                    };
+            //        var response = new ValidationErrorResponse()
+            //        {
+            //            Errors = errors
+            //        };
 
-                    return new BadRequestObjectResult(response);
-                };
-            });
+            //        return new BadRequestObjectResult(response);
+            //    };
+            //}); 
+            #endregion
+
+            builder.Services.RegisterAllServices(builder.Configuration);
 
 
             var app = builder.Build();
 
+            #region MiddleWares
+            //#region Initialize Db
+            //using var scope = app.Services.CreateScope();
+            //var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();  // Ask CLR To Create Object From IDbInitializer 
+            //await dbInitializer.InitializeAsync();
+            //#endregion
 
-            #region Initialize Db
-            using var scope = app.Services.CreateScope();
-            var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();  // Ask CLR To Create Object From IDbInitializer 
-            await dbInitializer.InitializeAsync();
-            #endregion
+            //app.UseMiddleware<GlobalErrorHandlingMiddleware>();
 
-            app.UseMiddleware<GlobalErrorHandlingMiddleware>();
-
-            app.UseStaticFiles();
+            //app.UseStaticFiles();
 
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            //if (app.Environment.IsDevelopment())
+            //{
+            //    app.UseSwagger();
+            //    app.UseSwaggerUI();
+            //}
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
 
-            app.MapControllers();
+            //app.MapControllers(); 
+            #endregion
+            await app.ConfigureMiddleWares();
 
             app.Run();
         }
