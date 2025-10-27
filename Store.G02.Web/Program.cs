@@ -5,6 +5,7 @@ using Store.G02.Persistence.Data.Contexts;
 using Store.G02.Services;
 using Store.G02.Services.Abstraction;
 using Store.G02.Services.Mapping.Products;
+using Store.G02.Web.Middlewares;
 using System.Threading.Tasks;
 
 namespace Store.G02.Web
@@ -41,9 +42,10 @@ namespace Store.G02.Web
             #region Initialize Db
             using var scope = app.Services.CreateScope();
             var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();  // Ask CLR To Create Object From IDbInitializer 
-            await dbInitializer.InitializeAsync(); 
+            await dbInitializer.InitializeAsync();
             #endregion
 
+            app.UseMiddleware<GlobalErrorHandlingMiddleware>();
 
             app.UseStaticFiles();
 

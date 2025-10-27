@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure\Store.G02.Persistence\Store.G02.Persistence.csproj" />
     <ProjectReference Include="..\Infrastructure\Store.G02.Presentation\Store.G02.Presentation.csproj" />
+    <ProjectReference Include="..\Store.G02.Shared\Store.G02.Shared.csproj" />
   </ItemGroup>
 
 </Project>
