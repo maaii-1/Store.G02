@@ -1,4 +1,5 @@
 ﻿using Store.G02.Services.Abstraction.Baskets;
+using Store.G02.Services.Abstraction.Cache;
 using Store.G02.Services.Abstraction.Products;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,6 @@ namespace Store.G02.Services.Abstraction
         public IProductService productService { get; }
 
         public IBasketService BasketService { get; }
+        public ICacheService CacheService { get; }
     }
 }
