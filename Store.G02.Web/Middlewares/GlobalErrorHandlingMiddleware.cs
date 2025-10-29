@@ -1,4 +1,4 @@
-﻿using Store.G02.Domain.Exceptions;
+﻿using Store.G02.Domain.Exceptions.NotFound;
 using Store.G02.Shared.ErrorsModels;
 
 namespace Store.G02.Web.Middlewares
