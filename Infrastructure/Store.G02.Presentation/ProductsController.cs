@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Store.G02.Shared.ErrorsModels;
+using Store.G02.Presentation.Attributes;
 
 namespace Store.G02.Presentation
 {
@@ -20,6 +21,7 @@ namespace Store.G02.Presentation
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResponse<ProductResponse>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetails))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorDetails))]
+        [Cache(100)]
         public async Task<ActionResult<PaginationResponse<ProductResponse>>> GetAllProducts([FromQuery] ProductQueryParameters parameters)
         {
             var result = await _serviceManager.productService.GetAllProductAsync(parameters);
