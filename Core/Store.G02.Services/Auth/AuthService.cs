@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using Store.G02.Domain.Entities.Identity;
@@ -17,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace Store.G02.Services.Auth
 {
-    public class AuthService(UserManager<AppUser> _userManager) : IAuthService
+    public class AuthService(UserManager<AppUser> _userManager, IConfiguration _configuration) : IAuthService
     {
         public async Task<UserResponse?> LoginAsync(LoginRequest request)
         {
@@ -83,14 +84,14 @@ namespace Store.G02.Services.Auth
 
 
             // STRONGSecurityKEYFORAUTHenticationSTRONGSecurityKEYFORAUTHenticationSTRONGSecurityKEYFORAUTHenticationSTRONGSecurityKEYFORAUTHentication
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("STRONGSecurityKEYFORAUTHenticationSTRONGSecurityKEYFORAUTHenticationSTRONGSecurityKEYFORAUTHenticationSTRONGSecurityKEYFORAUTHentication"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtOptions:SecurityKey"]));
 
             var token = new JwtSecurityToken
                 (
-                    issuer: "https://localhost:7155",
-                    audience: "MyStore",
+                    issuer: _configuration["JwtOptions:Issuer"],
+                    audience: _configuration["JwtOptions:Audience"],
                     claims: authClaims,
-                    expires: DateTime.Now.AddDays(2),
+                    expires: DateTime.Now.AddDays(double.Parse(_configuration["JwtOptions:DurationinDays"])),
                     signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
 
                 );
