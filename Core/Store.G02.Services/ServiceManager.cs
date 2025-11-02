@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Store.G02.Domain.Contracts;
 using Store.G02.Domain.Entities.Identity;
 using Store.G02.Services.Abstraction;
@@ -24,7 +25,8 @@ namespace Store.G02.Services
         IMapper _mapper,
         IBasketRepository _basketRepository,
         ICacheRepository _cacheRepository,
-        UserManager<AppUser> _userManager) : IServiceManager
+        UserManager<AppUser> _userManager,
+        IConfiguration _configuration) : IServiceManager
     {
         public IProductService productService { get; } = new ProductService(_unitOfWork, _mapper);
 
@@ -32,6 +34,6 @@ namespace Store.G02.Services
 
         public ICacheService CacheService { get; } = new CacheService(_cacheRepository);
 
-        public IAuthService AuthService { get; } = new AuthService(_userManager);
+        public IAuthService AuthService { get; } = new AuthService(_userManager, _configuration);
     }
 }
