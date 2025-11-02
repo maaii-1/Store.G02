@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Store.G02.Domain.Contracts;
+using Store.G02.Domain.Entities.Identity;
 using Store.G02.Persistence;
+using Store.G02.Persistence.Identity.Contexts;
 using Store.G02.Services;
 using Store.G02.Shared.ErrorsModels;
 using Store.G02.Web.Middlewares;
@@ -19,6 +22,8 @@ namespace Store.G02.Web.Extensions
             services.AddApplicationServices(configuration);
 
             services.ConfigureServices();
+
+            services.AddIdentityServices();
             
 
             return services;
@@ -36,6 +41,18 @@ namespace Store.G02.Web.Extensions
             services.AddSwaggerGen();
             return services;
         }
+
+        private static IServiceCollection AddIdentityServices(this IServiceCollection services)
+        {
+           services.AddIdentityCore<AppUser>(options =>
+           {
+               options.User.RequireUniqueEmail = true;
+           }).AddRoles<IdentityRole>()
+             .AddEntityFrameworkStores<IdentityStoreDbContext>();
+
+            return services;
+        }
+
 
         private static IServiceCollection ConfigureServices(this IServiceCollection services)
         {
@@ -96,6 +113,7 @@ namespace Store.G02.Web.Extensions
             using var scope = app.Services.CreateScope();
             var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();  // Ask CLR To Create Object From IDbInitializer 
             await dbInitializer.InitializeAsync();
+            await dbInitializer.InitializeIdentityAsync();
             #endregion
 
             return app;
