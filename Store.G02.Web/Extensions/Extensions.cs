@@ -5,6 +5,7 @@ using Store.G02.Domain.Entities.Identity;
 using Store.G02.Persistence;
 using Store.G02.Persistence.Identity.Contexts;
 using Store.G02.Services;
+using Store.G02.Shared;
 using Store.G02.Shared.ErrorsModels;
 using Store.G02.Web.Middlewares;
 using System.Runtime.CompilerServices;
@@ -25,6 +26,7 @@ namespace Store.G02.Web.Extensions
 
             services.AddIdentityServices();
             
+            services.Configure<JwtOptions>(configuration.GetSection("JwtOptions"));
 
             return services;
         }
