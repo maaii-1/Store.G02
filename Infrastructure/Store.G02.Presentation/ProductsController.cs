@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Store.G02.Shared.ErrorsModels;
 using Store.G02.Presentation.Attributes;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Store.G02.Presentation
 {
@@ -22,6 +23,7 @@ namespace Store.G02.Presentation
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetails))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorDetails))]
         [Cache(100)]
+        [Authorize]
         public async Task<ActionResult<PaginationResponse<ProductResponse>>> GetAllProducts([FromQuery] ProductQueryParameters parameters)
         {
             var result = await _serviceManager.productService.GetAllProductAsync(parameters);

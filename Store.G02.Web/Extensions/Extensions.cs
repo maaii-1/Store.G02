@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Store.G02.Domain.Contracts;
 using Store.G02.Domain.Entities.Identity;
 using Store.G02.Persistence;
@@ -9,6 +10,7 @@ using Store.G02.Shared;
 using Store.G02.Shared.ErrorsModels;
 using Store.G02.Web.Middlewares;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace Store.G02.Web.Extensions
 {
@@ -27,6 +29,9 @@ namespace Store.G02.Web.Extensions
             services.AddIdentityServices();
             
             services.Configure<JwtOptions>(configuration.GetSection("JwtOptions"));
+
+            services.AddAuthenticationServices(configuration);
+        
 
             return services;
         }
@@ -82,6 +87,34 @@ namespace Store.G02.Web.Extensions
         }
 
 
+        private static IServiceCollection AddAuthenticationServices(this IServiceCollection services, IConfiguration configuration)
+        {
+
+            var jwtOptions = configuration.GetSection("JwtOptions").Get<JwtOptions>();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "Bearer";
+                options.DefaultChallengeScheme = "Bearer";
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = jwtOptions.Issuer,
+                    ValidateAudience = true,
+                    ValidAudience = jwtOptions.Audience,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.SecurityKey)),
+                };
+            });
+
+            return services;
+
+        }
+
+
         public static async Task<WebApplication> ConfigureMiddleWares(this WebApplication app)
         {
             await app.InitializeDatabaseAsync();
@@ -100,6 +133,7 @@ namespace Store.G02.Web.Extensions
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
