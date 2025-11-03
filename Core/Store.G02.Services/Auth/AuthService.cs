@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using Store.G02.Domain.Entities.Identity;
@@ -7,6 +8,7 @@ using Store.G02.Domain.Exceptions.BadRequest;
 using Store.G02.Domain.Exceptions.NotFound;
 using Store.G02.Domain.Exceptions.Unauthorized;
 using Store.G02.Services.Abstraction.Auth;
+using Store.G02.Shared;
 using Store.G02.Shared.Dtos.Auth;
 using System;
 using System.Collections.Generic;
@@ -18,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace Store.G02.Services.Auth
 {
-    public class AuthService(UserManager<AppUser> _userManager, IConfiguration _configuration) : IAuthService
+    public class AuthService(UserManager<AppUser> _userManager, IOptions<JwtOptions> options) : IAuthService
     {
         public async Task<UserResponse?> LoginAsync(LoginRequest request)
         {
@@ -83,15 +85,17 @@ namespace Store.G02.Services.Auth
             }
 
 
+            var JwtOptions = options.Value;
+
             // STRONGSecurityKEYFORAUTHenticationSTRONGSecurityKEYFORAUTHenticationSTRONGSecurityKEYFORAUTHenticationSTRONGSecurityKEYFORAUTHentication
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtOptions:SecurityKey"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtOptions.SecurityKey));
 
             var token = new JwtSecurityToken
                 (
-                    issuer: _configuration["JwtOptions:Issuer"],
-                    audience: _configuration["JwtOptions:Audience"],
+                    issuer: JwtOptions.Issuer,
+                    audience: JwtOptions.Audience,
                     claims: authClaims,
-                    expires: DateTime.Now.AddDays(double.Parse(_configuration["JwtOptions:DurationinDays"])),
+                    expires: DateTime.Now.AddDays(JwtOptions.DurationinDays),
                     signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
 
                 );
