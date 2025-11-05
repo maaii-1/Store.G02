@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Store.G02.Domain.Contracts;
 using Store.G02.Domain.Entities.Identity;
+using Store.G02.Domain.Entities.Orders;
 using Store.G02.Domain.Entities.Products;
 using Store.G02.Persistence.Data.Contexts;
 using Store.G02.Persistence.Identity.Contexts;
@@ -77,6 +78,19 @@ namespace Store.G02.Persistence
                 if(products is  not null && products.Count > 0)
                 {
                     await _context.Products.AddRangeAsync(products);
+                }
+            }
+
+
+            if (!_context.DeliveryMethods.Any())
+            {
+                var deliveryData = await File.ReadAllTextAsync(@"..\Infrastructure\Store.G02.Persistence\Data\DataSeeding\delivery.json");
+
+                var deliveryMethod = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryData);
+
+                if (deliveryMethod is not null && deliveryMethod.Count > 0)
+                {
+                    await _context.DeliveryMethods.AddRangeAsync(deliveryMethod);
                 }
             }
 
