@@ -23,6 +23,8 @@ namespace Store.G02.Services.Mapping
                 .ForMember(D => D.ProductId, O => O.MapFrom(S => S.Product.ProductId))
                 .ForMember(D => D.ProductName, O => O.MapFrom(S => S.Product.ProductName))
                 .ForMember(D => D.PictureUrl, O => O.MapFrom(S => S.Product.PictureUrl));
+
+            CreateMap<DeliveryMethod, DeliveryMethodResponse>();
         }
     }
 }
