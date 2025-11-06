@@ -15,6 +15,6 @@ namespace Store.G02.Shared.Dtos.Orders
         public string DeliveryMethod { get; set; }
         public ICollection<OrderItemDto> Items { get; set; }
         public decimal SubtTotal { get; set; }
-        public decimal MyProperty { get; set; }
+        public decimal Total { get; set; }
     }
 }
