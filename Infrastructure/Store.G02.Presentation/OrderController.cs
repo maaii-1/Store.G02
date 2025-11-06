@@ -25,5 +25,33 @@ namespace Store.G02.Presentation
             return Ok(result);  
         }
 
+
+        [HttpGet("deliveryMethods")]
+        public async Task<IActionResult> GetAllDeliveryMethods()
+        {
+            var result = await _serviceManager.OrderService.GetAllDeliveryMethodAsync();
+            return Ok(result);
+        }
+
+
+        [HttpGet("{id}")]
+        [Authorize]
+        public async Task<IActionResult> GetOrderByIdForSpecificUser(Guid id)
+        {
+            var userEmailClaim = User.FindFirst(ClaimTypes.Email);
+            var result = await _serviceManager.OrderService.GetOrderByIdForSpecificUserAsync(id, userEmailClaim.Value);
+            return Ok(result);
+        }
+
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetOrdersForSpecificUser(Guid id)
+        {
+            var userEmailClaim = User.FindFirst(ClaimTypes.Email);
+            var result = await _serviceManager.OrderService.GetOrdersForSpecificUserAsync(userEmailClaim.Value);
+            return Ok(result);
+        }
+
     }
 }
