@@ -33,5 +33,13 @@ namespace Store.G02.Presentation
             return Ok(result);
         }
 
+
+        // Check Email Exist
+
+
+        // Get Current User
+        // Get Current User Address
+        // Update Current User Address
+
     }
 }

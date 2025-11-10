@@ -38,7 +38,7 @@ namespace Store.G02.Services
 
         public ICacheService CacheService { get; } = new CacheService(_cacheRepository);
 
-        public IAuthService AuthService { get; } = new AuthService(_userManager, _options);
+        public IAuthService AuthService { get; } = new AuthService(_userManager, _options, _mapper);
 
         public IOrderService OrderService { get; } = new OrderService(_unitOfWork, _mapper, _basketRepository);
     }

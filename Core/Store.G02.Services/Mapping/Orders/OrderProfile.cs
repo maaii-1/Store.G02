@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Store.G02.Services.Mapping
+namespace Store.G02.Services.Mapping.Orders
 {
     public class OrderProfile : Profile
     {
