@@ -60,7 +60,7 @@ namespace Store.G02.Services.Auth
 
             if(user.Address is null)
             {
-                user.Address = _mapper.Map<Address>(user.Address);
+                user.Address = _mapper.Map<Address>(request);
             }
             else
             {
