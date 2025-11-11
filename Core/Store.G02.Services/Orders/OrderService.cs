@@ -58,7 +58,7 @@ namespace Store.G02.Services.Orders
 
             // Create Order
 
-            var order = new Order(userEmail, orderAddress, deliveryMethod, orderItems, subTotal);
+            var order = new Order(userEmail, orderAddress, deliveryMethod, orderItems, subTotal, basket.PaymentIntentId);
 
 
             // Create Order In DataBase
