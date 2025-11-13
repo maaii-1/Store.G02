@@ -14,8 +14,8 @@ namespace Store.G02.Persistence.Repositories
         private readonly IDatabase _database = connection.GetDatabase();
         public async Task<string?> GetAsync(string key)
         {
-            var redisValue = await _database.StringGetAsync(key);
-            return ! redisValue.IsNullOrEmpty ? redisValue : default;
+            var value = await _database.StringGetAsync(key);
+            return ! value.IsNullOrEmpty ? value : default;
         }
 
         public async Task SetAsync(string key, object value, TimeSpan duration)

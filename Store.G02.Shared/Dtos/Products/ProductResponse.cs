@@ -8,6 +8,7 @@ namespace Store.G02.Shared.Dtos.Products
 {
     public class ProductResponse
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string PictureUrl { get; set; }

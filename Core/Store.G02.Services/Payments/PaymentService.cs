@@ -18,7 +18,7 @@ namespace Store.G02.Services.Payments
 {
     public class PaymentService(IBasketRepository _basketRepository, IUnitOfWork _unitOfWork, IConfiguration configuration, IMapper _mapper) : IPaymentService
     {
-        public async Task<BasketDto?> CreatePaymentIntentAsync(string basketId)
+        public async Task<BasketDto> CreatePaymentIntentAsync(string basketId)
         {
             // Claculate Amount = SubTotal + Delivery Method Cost
 
