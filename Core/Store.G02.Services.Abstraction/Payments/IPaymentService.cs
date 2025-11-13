@@ -9,6 +9,6 @@ namespace Store.G02.Services.Abstraction.Payments
 {
     public interface IPaymentService
     {
-        Task<BasketDto?> CreatePaymentIntentAsync(string basketId);
+        Task<BasketDto> CreatePaymentIntentAsync(string basketId);
     }
 }

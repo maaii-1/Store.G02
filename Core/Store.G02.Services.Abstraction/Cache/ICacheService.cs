@@ -8,7 +8,7 @@ namespace Store.G02.Services.Abstraction.Cache
 {
     public interface ICacheService
     {
-        Task SetAsync(string key, object value, TimeSpan duration);
-        Task<string?> GetAsync(string key);
+        Task SetCacheValueAsync(string key, object value, TimeSpan duration);
+        Task<string?> GetCacheValueAsync(string key);
     }
 }

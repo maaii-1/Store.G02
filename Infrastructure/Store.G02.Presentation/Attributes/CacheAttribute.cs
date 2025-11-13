@@ -19,7 +19,7 @@ namespace Store.G02.Presentation.Attributes
 
             var cacheKey = GenerateCacheKey(context.HttpContext.Request);
 
-            var result = await cacheService.GetAsync(cacheKey);
+            var result = await cacheService.GetCacheValueAsync(cacheKey);
 
             if(!string.IsNullOrEmpty(result))
             {
@@ -37,7 +37,7 @@ namespace Store.G02.Presentation.Attributes
             var actionContext = await next.Invoke();
             if(actionContext.Result is OkObjectResult okObject)
             {
-                await cacheService.SetAsync(cacheKey, okObject.Value, TimeSpan.FromSeconds(durationInSec));
+                await cacheService.SetCacheValueAsync(cacheKey, okObject.Value, TimeSpan.FromSeconds(durationInSec));
             }
         }
 
