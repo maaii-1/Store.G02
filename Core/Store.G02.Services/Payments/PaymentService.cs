@@ -74,8 +74,6 @@ namespace Store.G02.Services.Payments
                 var options = new PaymentIntentUpdateOptions()
                 {
                     Amount = (long)amount * 100,
-                    Currency = "usd",
-                    PaymentMethodTypes = new List<string>() { "card" }
                 };
 
                 paymentIntent = await paymentIntentService.UpdateAsync(basket.PaymentIntentId, options);
