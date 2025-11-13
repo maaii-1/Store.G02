@@ -9,7 +9,7 @@ namespace Store.G02.Services.Abstraction.Orders
 {
     public interface IOrderService
     {
-        Task<OrderResponse?> CreateOrderAsync(OrderRequest order, string userEmail);
+        Task<OrderResponse?> CreateOrderAsync(OrderRequest request, string userEmail);
         Task<IEnumerable<DeliveryMethodResponse>> GetAllDeliveryMethodAsync();
         Task<OrderResponse?> GetOrderByIdForSpecificUserAsync(Guid id, string userEmail);
         Task<IEnumerable<OrderResponse>> GetOrdersForSpecificUserAsync(string userEmail);

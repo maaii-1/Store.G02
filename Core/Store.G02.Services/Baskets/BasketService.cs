@@ -24,9 +24,9 @@ namespace Store.G02.Services.Baskets
             return result;
         }
 
-        public async Task<BasketDto?> UpdateBasketAsync(BasketDto basketDto, TimeSpan duration)
+        public async Task<BasketDto?> CreateBasketAsync(BasketDto dto, TimeSpan duration)
         {
-            var basket = _mapper.Map<CustomerBasket>(basketDto);
+            var basket = _mapper.Map<CustomerBasket>(dto);
             basket = await _basketRepository.UpdateBasketAsync(basket, duration);
             if (basket is null) throw new BasketCreateOrUpdateBadRequestException();
             var result = _mapper.Map<BasketDto>(basket);

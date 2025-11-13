@@ -10,7 +10,7 @@ namespace Store.G02.Services.Abstraction.Baskets
     public interface IBasketService
     {
         Task<BasketDto?> GetBasketAsync(string id);
-        Task<BasketDto?> UpdateBasketAsync(BasketDto basketDto, TimeSpan duration);
+        Task<BasketDto?> CreateBasketAsync(BasketDto basketDto, TimeSpan duration);
         Task<bool> DeleteBasketAsync(string id);
     }
 }

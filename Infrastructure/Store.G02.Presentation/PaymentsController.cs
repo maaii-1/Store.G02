@@ -21,6 +21,7 @@ namespace Store.G02.Presentation
             return Ok(result);
         }
 
+
         // stripe listen --forward-to https://localhost:7155/api/payments/webhook
         [Route("webhook")]
         [HttpPost]
