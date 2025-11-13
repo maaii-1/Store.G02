@@ -24,7 +24,7 @@ namespace Store.G02.Presentation
         [HttpPost]
         public async Task<IActionResult> UpdateBasketById(BasketDto basketDto)
         {
-            var result = await _serviceManager.BasketService.UpdateBasketAsync(basketDto, TimeSpan.FromDays(1));
+            var result = await _serviceManager.BasketService.CreateBasketAsync(basketDto, TimeSpan.FromDays(1));
             return Ok(result);
         }
 
